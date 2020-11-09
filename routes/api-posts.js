@@ -99,3 +99,40 @@ router.delete('/:id', (req, res) => {
 })
 
 module.exports = router;
+
+//GET /api/vi/posts/102/comments
+
+router.get('/:postid/comments', (req, res) => {
+  models.Comment.findAll({
+    where: {
+      PostId : req.params.postId
+    }
+  })
+  .then(comment => {
+    res.json(comments);
+  })
+})
+
+// POST /api/v1/posts/:/id/comments
+router.post('/:postId/comments', (req, res) => {
+  models.Post.findByPk(req.params.postId)
+  .then(post => {
+      if (!post) {
+        res.status(404).json({
+          error : "Couldn't find it chief."
+        })
+      }
+      return post.createComment({
+        author: req.body.author,
+        content: req.body.content,
+        approved : true
+      })
+      })
+      .then(comment => {
+        console.log(comment);
+        res.json({
+          success: "I've added a comment!"
+        })
+      })
+    })
+  
