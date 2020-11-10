@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "postinstall": "cd client && npm install && npm run build",
+    "db:reset": "sequelize db:drop; sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -13,6 +15,9 @@
     "morgan": "~1.9.1",
     "nodemon": "^2.0.6",
     "pg": "^8.4.2",
+    "react-router-dom": "^5.2.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.1",
     "sequelize": "^6.3.5"
   }
 }

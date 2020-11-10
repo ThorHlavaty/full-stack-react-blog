@@ -102,13 +102,13 @@ module.exports = router;
 
 //GET /api/vi/posts/102/comments
 
-router.get('/:postid/comments', (req, res) => {
+router.get('/:postId/comments', (req, res) => {
   models.Comment.findAll({
     where: {
       PostId : req.params.postId
     }
   })
-  .then(comment => {
+  .then(comments => {
     res.json(comments);
   })
 })
@@ -125,13 +125,14 @@ router.post('/:postId/comments', (req, res) => {
       return post.createComment({
         author: req.body.author,
         content: req.body.content,
-        approved : true
+        approved : req.body.approved || true 
       })
       })
       .then(comment => {
         console.log(comment);
         res.json({
-          success: "I've added a comment!"
+          success: "I've added a comment!",
+          comment: comment
         })
       })
     })
